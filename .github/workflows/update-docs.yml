@@ -1,0 +1,13 @@
+name: Update Docs
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - run: pip install '.[dev]'
+      - run: PYTHONPATH=$PWD mkdocs gh-deploy --force

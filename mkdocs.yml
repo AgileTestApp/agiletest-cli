@@ -1,0 +1,38 @@
+site_name: AgileTest CLI
+repo_url: https://github.com/AgileTestApp/agiletest-cli
+edit_uri: edit/main/docs/
+theme:
+  name: material
+  logo: images/favicon.png
+  favicon: images/favicon.png
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+  font:
+    text: Open Sans
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - mkdocs-click
+  - attr_list
+  - toc:
+      permalink: ⚓︎
+  - pymdownx.highlight:
+      anchor_linenums: true
+      auto_title: true
+  - pymdownx.superfences
+
+plugins:
+  - include-markdown

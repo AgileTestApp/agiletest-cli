@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "Python Debugger: CLI with Arguments",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/agiletest_cli/main.py",
+            "console": "integratedTerminal",
+            "args": "${command:pickArgs}",
+        }
+    ]
+}
