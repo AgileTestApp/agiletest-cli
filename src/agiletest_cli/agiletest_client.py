@@ -10,6 +10,8 @@ from config import (
     AGILETEST_AUTH_BASE_URL,
     AGILETEST_BASE_URL,
     DEFAULT_TIMEOUT,
+    FRAMEWORK_RESULT_FILETYPE_MAPPING,
+    MIME_TYPE_MAPPING,
     TEST_EXECUTION_TYPES,
 )
 from httpx import Request, Response
@@ -121,6 +123,15 @@ class AgiletestHelper:
                 return False
         return True
 
+    @staticmethod
+    def _check_auto_test_framework_type(framework_type: str) -> str:
+        framework_type = framework_type.lower()
+        if framework_type not in TEST_EXECUTION_TYPES:
+            raise ValueError(
+                f"Invalid test execution type: {framework_type}. Supported frameworks: {TEST_EXECUTION_TYPES}"
+            )
+        return framework_type
+
     def upload_test_execution_text_xml(
         self,
         framework_type: str,
@@ -142,11 +153,7 @@ class AgiletestHelper:
         Returns:
             bool | dict: false if failed, dict with response if success
         """
-        framework_type = framework_type.lower()
-        if framework_type not in TEST_EXECUTION_TYPES:
-            raise ValueError(
-                f"Invalid test execution type: {framework_type}. Supported frameworks: {TEST_EXECUTION_TYPES}"
-            )
+        framework_type = self._check_auto_test_framework_type(framework_type)
         params = {"projectKey": project_key}
         if test_execution_key:
             params["testExecutionKey"] = test_execution_key
@@ -161,6 +168,71 @@ class AgiletestHelper:
         result = self._check_response(res)
         if not result:
             return result
+        self.logger.info(f"Test execution uploaded successfully: '{res.text}'")
+        res_json: dict = res.json()
+        test_execution_key = res_json.get("key", "")
+        test_execution_url = res_json.get("url", "")
+        missed_cases = res_json.get("missedCases", [])
+        if missed_cases:
+            self.logger.warning(
+                f"Test execution {test_execution_key} with missed test cases: {missed_cases}"
+            )
+        self.logger.info(
+            f"Test Execution issue updated: {test_execution_key} {test_execution_url}"
+        )
+        return res_json
+
+    @staticmethod
+    def _get_file_type_from_test_framework(framework_type: str) -> tuple[str, str]:
+        """Get file extension and mime type from test framework type.
+
+        Args:
+            framework_type (str): test framework name
+
+        Raises:
+            ValueError: if framework type or mime type is not found
+
+        Returns:
+            tuple[str, str]: extension, mime type
+        """
+        extension = FRAMEWORK_RESULT_FILETYPE_MAPPING.get(framework_type, None)
+        if extension is None:
+            raise ValueError(f"Extension not found for framework type {framework_type}")
+        mime_type = MIME_TYPE_MAPPING.get(extension, None)
+        if mime_type is None:
+            raise ValueError(f"Mime type not found for extension {extension}")
+        return extension, mime_type
+
+    def upload_test_execution_multipart(
+        self,
+        framework_type: str,
+        test_results: str,
+        test_execution_info: str,
+    ) -> bool | dict:
+        framework_type = self._check_auto_test_framework_type(framework_type)
+        tr_extension, tr_mime_type = self._get_file_type_from_test_framework(
+            framework_type
+        )
+        files = {
+            "results": (
+                f"results.{tr_extension}",
+                test_results,
+                tr_mime_type,
+            ),
+            "testExecution": (
+                "info.json",  # currently only json is supported
+                test_execution_info,
+                MIME_TYPE_MAPPING["json"],
+            ),
+        }
+        res = self.client.post(
+            f"/ds/test-executions/{framework_type}/multipart",
+            files=files,
+        )
+        result = self._check_response(res)
+        if not result:
+            return result
+
         self.logger.info(f"Test execution uploaded successfully: '{res.text}'")
         res_json: dict = res.json()
         test_execution_key = res_json.get("key", "")

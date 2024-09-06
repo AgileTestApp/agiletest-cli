@@ -7,15 +7,20 @@ load_dotenv()
 DEFAULT_BASE_URL = "https://api.agiletest.app"
 DEFAULT_AUTH_BASE_URL = "https://jira.agiletest.app"
 
-TEST_EXECUTION_TYPES = [
-    "junit",
-    "nunit",
-    "testng",
-    "cucumber",
-    "behave",
-    "xunit",
-    "robot",
-]
+FRAMEWORK_RESULT_FILETYPE_MAPPING = {
+    "junit": "xml",
+    "nunit": "xml",
+    "testng": "xml",
+    "xunit": "xml",
+    "robot": "xml",
+    "cucumber": "json",
+    "behave": "json",
+}
+TEST_EXECUTION_TYPES = list(FRAMEWORK_RESULT_FILETYPE_MAPPING.keys())
+MIME_TYPE_MAPPING = {
+    "xml": "application/xml",
+    "json": "application/json",
+}
 
 AGILETEST_CLIENT_ID = os.getenv("AGILETEST_CLIENT_ID", "")
 AGILETEST_CLIENT_SECRET = os.getenv("AGILETEST_CLIENT_SECRET", "")

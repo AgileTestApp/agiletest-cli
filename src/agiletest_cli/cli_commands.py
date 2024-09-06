@@ -62,3 +62,43 @@ def import_test_execution(
         logger.error("Failed to import test execution")
         ctx.exit(1)
     logger.info("Successfully imported Test Execution result!")
+
+
+@test_execution.command("import-multipart")
+@click.option(
+    "-t", "--framework-type", required=True, type=click.Choice(TEST_EXECUTION_TYPES)
+)
+@click.option(
+    "-i", "--test-info", type=click.File(mode="r"), default=sys.stdin, required=True
+)
+@click.argument("test_result", type=click.File(mode="r"), default=sys.stdin)
+@click.pass_context
+def import_test_execution_multipart(
+    ctx: click.Context,
+    framework_type: str,
+    test_info: typing.TextIO,
+    test_result: typing.TextIO,
+):
+    """Import a test execution result in multipart format."""
+    logger = get_logger_from_click_ctx(ctx)
+    logger.info(
+        f"Importing test execution for '{framework_type}' framework in multipart"
+    )
+
+    test_result_text = test_result.read()
+    test_info_text = test_info.read()
+    helper = AgiletestHelper(
+        client_id=ctx.obj["AGILETEST_CLIENT_ID"],
+        client_secret=ctx.obj["AGILETEST_CLIENT_SECRET"],
+        base_url=ctx.obj["AGILETEST_BASE_URL"],
+        timeout=ctx.obj["TIMEOUT"],
+    )
+    result = helper.upload_test_execution_multipart(
+        framework_type=framework_type,
+        test_results=test_result_text,
+        test_execution_info=test_info_text,
+    )
+    if not result:
+        logger.error("Failed to import test execution multipart")
+        ctx.exit(1)
+    logger.info("Successfully imported Test Execution result!")
