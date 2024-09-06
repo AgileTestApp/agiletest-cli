@@ -31,7 +31,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ghcr.io/AgileTestApp/agiletest-cli
+            ghcr.io/agiletestapp/agiletest-cli
           tags: |
             type=ref,event=branch
             type=ref,event=pr

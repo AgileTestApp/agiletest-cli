@@ -13,7 +13,7 @@ For other documentations, visit [AgileTest Documentation](https://docs.devsamura
 
 AgileTest CLI is available as:
 
-* [Docker Image](https://github.com/AgileTestApp/agiletest-cli/pkgs/container/agiletest-cli) `ghcr.io/AgileTestApp/agiletest-cli:latest`
+* [Docker Image](https://github.com/AgileTestApp/agiletest-cli/pkgs/container/agiletest-cli) `ghcr.io/agiletestapp/agiletest-cli:latest`
 * Python Package (coming soon). For now you can [install from source](#install-from-source).
 
 For full CLI documentation, visit [AgileTest CLI Documentation](cli.md).
@@ -51,7 +51,7 @@ agiletest --client-id your_client_id --client-secret your_client_secret \
 docker run --rm -i \
     -e AGILETEST_CLIENT_ID=your_client_id \
     -e AGILETEST_CLIENT_SECRET=your_client_secret \
-    ghcr.io/AgileTestApp/agiletest-cli \
+    ghcr.io/agiletestapp/agiletest-cli \
     test-execution import \
     --framework-type junit --project-key TC \
     --test-execution-key TC-202 <tests/junit-test-data.xml

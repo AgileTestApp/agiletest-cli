@@ -22,7 +22,7 @@ hide:
 To build for local testing:
 
 ```shell
-docker build --rm -t ghcr.io/AgileTestApp/agiletest-cli .
+docker build --rm -t ghcr.io/agiletestapp/agiletest-cli .
 ```
 
 Test your build.
