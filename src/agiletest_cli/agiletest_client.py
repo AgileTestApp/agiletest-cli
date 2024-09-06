@@ -7,15 +7,14 @@ from typing import Generator
 import httpx
 import jwt
 from config import (
-    DEFAULT_AUTH_BASE_URL,
-    DEFAULT_BASE_URL,
+    AGILETEST_AUTH_BASE_URL,
+    AGILETEST_BASE_URL,
     DEFAULT_TIMEOUT,
     TEST_EXECUTION_TYPES,
 )
 from httpx import Request, Response
 
 LOG_LEVEL = os.getenv("LOG_LEVEL", logging.INFO)
-AUTH_BASE_URL = os.getenv("AGILETEST_AUTH_BASE_URL", DEFAULT_AUTH_BASE_URL).strip("/")
 
 
 class AgiletestAuth(httpx.Auth):
@@ -25,7 +24,7 @@ class AgiletestAuth(httpx.Auth):
         self,
         client_id: str,
         client_secret: str,
-        auth_base_url: str = DEFAULT_AUTH_BASE_URL,
+        auth_base_url: str = AGILETEST_AUTH_BASE_URL,
     ):
         self.logger = logging.getLogger(__name__)
         self.client_id = client_id
@@ -86,7 +85,7 @@ class AgiletestHelper:
         self,
         client_id: str,
         client_secret: str,
-        base_url: str = DEFAULT_BASE_URL,
+        base_url: str = AGILETEST_BASE_URL,
         timeout: int = DEFAULT_TIMEOUT,
     ):
         self.logger = logging.getLogger(__name__)
