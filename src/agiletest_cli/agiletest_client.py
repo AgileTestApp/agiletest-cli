@@ -50,7 +50,7 @@ class AgiletestAuth(httpx.Auth):
         self.logger.debug(f"Building refresh request for client id {self.client_id}")
         return httpx.Request(
             method="POST",
-            url=f"{self.base_url}/api/v1/apikeys/authenticate",
+            url=f"{self.base_url}/api/apikeys/authenticate",
             json={"clientId": self.client_id, "clientSecret": self.client_secret},
         )
 
