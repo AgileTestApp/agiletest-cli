@@ -2,9 +2,8 @@ import sys
 import typing
 
 import click
-from agiletest_client import AgiletestHelper
+import utils
 from config import TEST_EXECUTION_TYPES
-from utils import get_logger_from_click_ctx
 
 
 @click.group("test-execution")
@@ -39,19 +38,14 @@ def import_test_execution(
     input_file: typing.TextIO,
 ):
     """Import a test execution result."""
-    logger = get_logger_from_click_ctx(ctx)
+    logger = utils.get_logger_from_click_ctx(ctx)
     msg = f"Importing test execution for '{framework_type}' framework to project '{project_key}'"
     if test_execution_key:
         msg += f" - Test Execution '{test_execution_key}'"
     logger.info(msg)
 
     input_text = input_file.read()
-    helper = AgiletestHelper(
-        client_id=ctx.obj["AGILETEST_CLIENT_ID"],
-        client_secret=ctx.obj["AGILETEST_CLIENT_SECRET"],
-        base_url=ctx.obj["AGILETEST_BASE_URL"],
-        timeout=ctx.obj["TIMEOUT"],
-    )
+    helper = utils.get_agiletest_helper_from_click_ctx(ctx)
     result = helper.upload_test_execution_text_xml(
         framework_type=framework_type,
         project_key=project_key,
@@ -80,19 +74,14 @@ def import_test_execution_multipart(
     test_result: typing.TextIO,
 ):
     """Import a test execution result in multipart format."""
-    logger = get_logger_from_click_ctx(ctx)
+    logger = utils.get_logger_from_click_ctx(ctx)
     logger.info(
         f"Importing test execution for '{framework_type}' framework in multipart"
     )
 
     test_result_text = test_result.read()
     test_info_text = test_info.read()
-    helper = AgiletestHelper(
-        client_id=ctx.obj["AGILETEST_CLIENT_ID"],
-        client_secret=ctx.obj["AGILETEST_CLIENT_SECRET"],
-        base_url=ctx.obj["AGILETEST_BASE_URL"],
-        timeout=ctx.obj["TIMEOUT"],
-    )
+    helper = utils.get_agiletest_helper_from_click_ctx(ctx)
     result = helper.upload_test_execution_multipart(
         framework_type=framework_type,
         test_results=test_result_text,

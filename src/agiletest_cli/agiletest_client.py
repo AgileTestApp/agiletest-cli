@@ -26,12 +26,12 @@ class AgiletestAuth(httpx.Auth):
         self,
         client_id: str,
         client_secret: str,
-        auth_base_url: str = AGILETEST_AUTH_BASE_URL,
+        base_auth_url: str = AGILETEST_AUTH_BASE_URL,
     ):
         self.logger = logging.getLogger(__name__)
         self.client_id = client_id
         self.client_secret = client_secret
-        self.base_url = auth_base_url
+        self.base_url = base_auth_url
         self.token = ""
 
         if not self.client_id or not self.client_secret:
@@ -88,6 +88,7 @@ class AgiletestHelper:
         client_id: str,
         client_secret: str,
         base_url: str = AGILETEST_BASE_URL,
+        base_auth_url: str = AGILETEST_AUTH_BASE_URL,
         timeout: int = DEFAULT_TIMEOUT,
     ):
         self.logger = logging.getLogger(__name__)
@@ -97,6 +98,7 @@ class AgiletestHelper:
         self.auth = AgiletestAuth(
             client_id=client_id,
             client_secret=client_secret,
+            base_auth_url=base_auth_url,
         )
         self.client = self._get_client()
 
