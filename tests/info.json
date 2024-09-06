@@ -2,7 +2,7 @@
     "fields": {
         "summary": "test",
         "project": {
-            "key": "10035"
+            "key": "TC"
         },
         "issuetype": {
             "id": "11548"
