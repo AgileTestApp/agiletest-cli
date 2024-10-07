@@ -1,0 +1,214 @@
+[
+    {
+        "elements": [
+            {
+                "keyword": "Background",
+                "location": "features/tutorial09_background.feature:3",
+                "name": "Ninja fight setup",
+                "steps": [
+                    {
+                        "keyword": "Given",
+                        "location": "features/tutorial09_background.feature:4",
+                        "name": "the ninja encounters another opponent",
+                        "step_type": "given"
+                    }
+                ],
+                "type": "background"
+            },
+            {
+                "keyword": "Scenario",
+                "location": "features/tutorial09_background.feature:7",
+                "name": "Weaker opponent",
+                "status": "passed",
+                "steps": [
+                    {
+                        "keyword": "Given",
+                        "location": "features/tutorial09_background.feature:4",
+                        "match": {
+                            "arguments": [],
+                            "location": "features/steps/step_tutorial02.py:78"
+                        },
+                        "name": "the ninja encounters another opponent the ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponent",
+                        "result": {
+                            "duration": 0.0007519721984863281,
+                            "status": "passed"
+                        },
+                        "step_type": "given"
+                    },
+                    {
+                        "keyword": "Given",
+                        "location": "features/tutorial09_background.feature:8",
+                        "match": {
+                            "arguments": [
+                                {
+                                    "name": "achievement_level",
+                                    "value": "third level black-belt"
+                                }
+                            ],
+                            "location": "features/steps/step_tutorial02.py:57"
+                        },
+                        "name": "the ninja has a third level black-beltthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponent",
+                        "result": {
+                            "duration": 8.988380432128906e-5,
+                            "status": "passed"
+                        },
+                        "step_type": "given"
+                    },
+                    {
+                        "keyword": "When",
+                        "location": "features/tutorial09_background.feature:9",
+                        "match": {
+                            "arguments": [
+                                {
+                                    "name": "opponent_role",
+                                    "value": "samurai"
+                                }
+                            ],
+                            "location": "features/steps/step_tutorial02.py:61"
+                        },
+                        "name": "attacked by a samurai",
+                        "result": {
+                            "duration": 6.29425048828125e-5,
+                            "status": "passed"
+                        },
+                        "step_type": "when"
+                    },
+                    {
+                        "keyword": "Then",
+                        "location": "features/tutorial09_background.feature:10",
+                        "match": {
+                            "arguments": [
+                                {
+                                    "name": "reaction",
+                                    "value": "engage the opponent"
+                                }
+                            ],
+                            "location": "features/steps/step_tutorial02.py:69"
+                        },
+                        "name": "the ninja should engage the opponent",
+                        "result": {
+                            "duration": 7.295608520507812e-5,
+                            "status": "passed"
+                        },
+                        "step_type": "then"
+                    }
+                ],
+                "tags": [
+                    "IE-3762"
+                ],
+                "type": "scenario"
+            },
+            {
+                "keyword": "Scenario",
+                "location": "features/tutorial09_background.feature:13",
+                "name": "Stronger opponent",
+                "status": "passed",
+                "steps": [
+                    {
+                        "keyword": "Given",
+                        "location": "features/tutorial09_background.feature:4",
+                        "match": {
+                            "arguments": [],
+                            "location": "features/steps/step_tutorial02.py:78"
+                        },
+                        "name": "the ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponentthe ninja encounters another opponent",
+                        "result": {
+                            "duration": 8.487701416015625e-5,
+                            "status": "passed"
+                        },
+                        "step_type": "given"
+                    },
+                    {
+                        "keyword": "Given",
+                        "location": "features/tutorial09_background.feature:14",
+                        "match": {
+                            "arguments": [
+                                {
+                                    "name": "achievement_level",
+                                    "value": "second level black-belt"
+                                }
+                            ],
+                            "location": "features/steps/step_tutorial02.py:57"
+                        },
+                        "name": "the ninja has a second level black-belt",
+                        "result": {
+                            "duration": 8.130073547363281e-5,
+                            "status": "passed"
+                        },
+                        "step_type": "given"
+                    },
+                    {
+                        "keyword": "When",
+                        "location": "features/tutorial09_background.feature:15",
+                        "match": {
+                            "arguments": [
+                                {
+                                    "name": "opponent",
+                                    "value": "Chuck Norris"
+                                }
+                            ],
+                            "location": "features/steps/step_tutorial02.py:65"
+                        },
+                        "name": "attacked by Chuck Norris",
+                        "result": {
+                            "duration": 6.127357482910156e-5,
+                            "status": "passed"
+                        },
+                        "step_type": "when"
+                    },
+                    {
+                        "keyword": "Then",
+                        "location": "features/tutorial09_background.feature:16",
+                        "match": {
+                            "arguments": [
+                                {
+                                    "name": "reaction",
+                                    "value": "run for his life"
+                                }
+                            ],
+                            "location": "features/steps/step_tutorial02.py:69"
+                        },
+                        "name": "the ninja should run for his lifeeeeeeee",
+                        "result": {
+                            "duration": 8.821487426757812e-5,
+                            "status": "passed"
+                        },
+                        "step_type": "then",
+                        "embeddings": [
+                            {
+                                "data": "eyJuYW1lIjogInNvbWUgSlNPTiJ9",
+                                "mime_type": "application/json"
+                            }
+                        ]
+                    },
+                    {
+                        "keyword": "After",
+                        "hidden": true,
+                        "result": {
+                            "status": "To Do",
+                            "duration": 148167
+                        },
+                        "embeddings": [
+                            {
+                                "data": "eyJuYW1lIjogInNvbWUgSlNPTiJ9",
+                                "mime_type": "application/json"
+                            }
+                        ]
+                    }
+                ],
+                "tags": [
+                    "IE-376"
+                ],
+                "type": "scenario"
+            }
+        ],
+        "keyword": "Feature",
+        "location": "features/tutorial09_background.feature:1",
+        "name": "Using Background -- Fight or Flight",
+        "status": "passed",
+        "tags": [
+            "IE-408"
+        ],
+        ,
+    }
+]

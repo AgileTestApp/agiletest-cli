@@ -1,0 +1,151 @@
+[
+    {
+        "keyword": "Feature",
+        "name": "Basic Arithmetic Operations",
+        "tags": [
+            "TC-234"
+        ],
+        "location": "features/calculate.feature:2",
+        "status": "passed",
+        "elements": [
+            {
+                "type": "scenario",
+                "keyword": "Scenario",
+                "name": "Adding two numbers",
+                "tags": [
+                    "TC-235"
+                ],
+                "location": "features/calculate.feature:5",
+                "steps": [
+                    {
+                        "keyword": "Given",
+                        "step_type": "given",
+                        "name": "I have the number 1",
+                        "location": "features/calculate.feature:6",
+                        "match": {
+                            "location": "features/steps/calculate.steps.py:4",
+                            "arguments": [
+                                {
+                                    "value": "1",
+                                    "name": "initialValue"
+                                }
+                            ]
+                        },
+                        "result": {
+                            "status": "passed",
+                            "duration": 6.222724914550781e-05
+                        }
+                    },
+                    {
+                        "keyword": "When",
+                        "step_type": "when",
+                        "name": "I increase it by 2",
+                        "location": "features/calculate.feature:7",
+                        "match": {
+                            "location": "features/steps/calculate.steps.py:9",
+                            "arguments": [
+                                {
+                                    "value": "2",
+                                    "name": "value"
+                                }
+                            ]
+                        },
+                        "result": {
+                            "status": "passed",
+                            "duration": 3.5762786865234375e-05
+                        }
+                    },
+                    {
+                        "keyword": "Then",
+                        "step_type": "then",
+                        "name": "the result should return 3",
+                        "location": "features/calculate.feature:8",
+                        "match": {
+                            "location": "features/steps/calculate.steps.py:19",
+                            "arguments": [
+                                {
+                                    "value": "3",
+                                    "name": "expected"
+                                }
+                            ]
+                        },
+                        "result": {
+                            "status": "passed",
+                            "duration": 2.7179718017578125e-05
+                        }
+                    }
+                ],
+                "status": "passed"
+            },
+            {
+                "type": "scenario",
+                "keyword": "Scenario",
+                "name": "Subtracting two numbers",
+                "tags": [
+                    "TC-236"
+                ],
+                "location": "features/calculate.feature:11",
+                "steps": [
+                    {
+                        "keyword": "Given",
+                        "step_type": "given",
+                        "name": "I have the number 5",
+                        "location": "features/calculate.feature:12",
+                        "match": {
+                            "location": "features/steps/calculate.steps.py:4",
+                            "arguments": [
+                                {
+                                    "value": "5",
+                                    "name": "initialValue"
+                                }
+                            ]
+                        },
+                        "result": {
+                            "status": "passed",
+                            "duration": 3.0994415283203125e-05
+                        }
+                    },
+                    {
+                        "keyword": "When",
+                        "step_type": "when",
+                        "name": "I subtract 3 from it",
+                        "location": "features/calculate.feature:13",
+                        "match": {
+                            "location": "features/steps/calculate.steps.py:14",
+                            "arguments": [
+                                {
+                                    "value": "3",
+                                    "name": "value"
+                                }
+                            ]
+                        },
+                        "result": {
+                            "status": "passed",
+                            "duration": 3.409385681152344e-05
+                        }
+                    },
+                    {
+                        "keyword": "Then",
+                        "step_type": "then",
+                        "name": "the result should return 2",
+                        "location": "features/calculate.feature:14",
+                        "match": {
+                            "location": "features/steps/calculate.steps.py:19",
+                            "arguments": [
+                                {
+                                    "value": "2",
+                                    "name": "expected"
+                                }
+                            ]
+                        },
+                        "result": {
+                            "status": "passed",
+                            "duration": 2.288818359375e-05
+                        }
+                    }
+                ],
+                "status": "passed"
+            }
+        ]
+    }
+]

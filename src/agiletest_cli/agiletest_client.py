@@ -134,11 +134,11 @@ class AgiletestHelper:
             )
         return framework_type
 
-    def upload_test_execution_text_xml(
+    def upload_test_execution_text_data(
         self,
         framework_type: str,
         project_key: str,
-        data_xml: str,
+        test_data: str,
         test_execution_key: str = "",
     ) -> bool | dict:
         """Upload test execution to Agiletest.
@@ -146,7 +146,7 @@ class AgiletestHelper:
         Args:
             framework_type (str): framework type
             project_key (str): project key
-            data_xml (str): test execution data in xml format
+            test_data (str): test execution data
             test_execution_key (str, optional): test execution jira issue key to import to. Defaults to "".
 
         Raises:
@@ -160,12 +160,13 @@ class AgiletestHelper:
         if test_execution_key:
             params["testExecutionKey"] = test_execution_key
 
-        headers = {"Content-Type": "text/xml"}
+        _, mime_type = self._get_file_type_from_test_framework(framework_type)
+        headers = {"Content-Type": mime_type}
         res = self.client.post(
             f"/ds/test-executions/{framework_type}",
             params=params,
             headers=headers,
-            content=data_xml,
+            content=test_data,
         )
         result = self._check_response(res)
         if not result:

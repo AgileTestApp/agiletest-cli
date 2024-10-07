@@ -46,10 +46,10 @@ def import_test_execution(
 
     input_text = input_file.read()
     helper = utils.get_agiletest_helper_from_click_ctx(ctx)
-    result = helper.upload_test_execution_text_xml(
+    result = helper.upload_test_execution_text_data(
         framework_type=framework_type,
         project_key=project_key,
-        data_xml=input_text,
+        test_data=input_text,
         test_execution_key=test_execution_key,
     )
     if not result:
