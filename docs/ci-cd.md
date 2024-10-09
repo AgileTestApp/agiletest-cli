@@ -22,3 +22,25 @@ A working sample repo is available at [AgileTestApp/sample-automation-test-impor
           test-execution import --framework-type robot --project-key TC \
           /reports/robot-report.xml
 ```
+
+## Bitbucket Pipelines
+
+A working sample repo is available at [agiletestapp/bitbucket-sample-automation-test-import](https://bitbucket.org/agiletestapp/bitbucket-sample-automation-test-import/). See [bitbucket-pipelines.yml](https://bitbucket.org/agiletestapp/bitbucket-sample-automation-test-import/src/main/bitbucket-pipelines.yml) for a sample Bitbucket Pipelines configuration that runs tests and uploads test results to AgileTest.
+
+```yaml
+# Sample step to test & upload Behave test results to AgileTest
+      - step:
+          image: python
+          name: Behave Test & Upload Report
+          script:
+            - pip install -r requirements.txt
+            - behave behave/features -f json -o reports/behave-report.json
+            - |
+              docker run --rm \
+              -e AGILETEST_CLIENT_ID=$AGILETEST_CLIENT_ID \
+              -e AGILETEST_CLIENT_SECRET=$AGILETEST_CLIENT_SECRET \
+              -v $BITBUCKET_CLONE_DIR/sample-automation-test-import/reports:/reports \
+              ghcr.io/agiletestapp/agiletest-cli:latest \
+              test-execution import --framework-type behave --project-key TC \
+              /reports/behave-report.json
+```
