@@ -18,6 +18,10 @@ AgileTest CLI is available as:
 
 For full CLI documentation, visit [AgileTest CLI Documentation](cli.md).
 
+### CI/CD Integration
+
+See [CI/CD Integration](ci-cd.md) for examples of how to integrate AgileTest CLI with popular CI/CD tools.
+
 ### Authentication
 
 To use the CLI, you need to [generate a pair of client ID and client secret from AgileTest](https://docs.devsamurai.com/agiletest/access-api-documentation).
