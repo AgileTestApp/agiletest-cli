@@ -28,6 +28,7 @@ AGILETEST_BASE_URL = os.getenv("AGILETEST_BASE_URL", DEFAULT_BASE_URL).strip("/"
 AGILETEST_AUTH_BASE_URL = os.getenv(
     "AGILETEST_AUTH_BASE_URL", DEFAULT_AUTH_BASE_URL
 ).strip("/")
+AGILETEST_DC_BEARER_TOKEN = os.getenv("AGILETEST_DC_BEARER_TOKEN", "")
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 
 LOG_FORMAT = "%(asctime)s [%(levelname)s] %(message)s"

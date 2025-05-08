@@ -13,6 +13,7 @@ from config import (
     FRAMEWORK_RESULT_FILETYPE_MAPPING,
     MIME_TYPE_MAPPING,
     TEST_EXECUTION_TYPES,
+    AGILETEST_DC_BEARER_TOKEN,
 )
 from httpx import Request, Response
 
@@ -27,15 +28,21 @@ class AgiletestAuth(httpx.Auth):
         client_id: str,
         client_secret: str,
         base_auth_url: str = AGILETEST_AUTH_BASE_URL,
+        data_center: bool = False,
+        bearer_token: str = AGILETEST_DC_BEARER_TOKEN,
     ):
         self.logger = logging.getLogger(__name__)
         self.client_id = client_id
         self.client_secret = client_secret
         self.base_url = base_auth_url
         self.token = ""
+        self.data_center = data_center
+        self.bearer_token = bearer_token
 
-        if not self.client_id or not self.client_secret:
+        if not self.data_center and (not self.client_id or not self.client_secret):
             raise ValueError("Client ID and Client Secret are required")
+        if self.data_center and not self.bearer_token:
+            raise ValueError("BEARER_TOKEN is required in Data Center mode")
 
     def _check_valid_token(self) -> bool:
         if not self.token:
@@ -67,19 +74,27 @@ class AgiletestAuth(httpx.Auth):
         self.token = str(response.text).strip()
 
     def auth_flow(self, request: httpx.Request) -> Generator[Request, Response, None]:
-        if not self._check_valid_token():
-            self.logger.debug("Refreshing token")
-            refresh_res = yield self.build_refresh_request()
-            self.update_token(refresh_res)
+        if not self.data_center:
+            if not self._check_valid_token():
+                self.logger.debug("Refreshing token")
+                refresh_res = yield self.build_refresh_request()
+                self.update_token(refresh_res)
 
-        request.headers["Authorization"] = f"JWT {self.token}"
-        response = yield request
-
-        if response.status_code == 401:
-            refresh_res = yield self.build_refresh_request()
-            self.update_token(refresh_res)
             request.headers["Authorization"] = f"JWT {self.token}"
-            yield request
+            response = yield request
+
+            if response.status_code == 401:
+                refresh_res = yield self.build_refresh_request()
+                self.update_token(refresh_res)
+                request.headers["Authorization"] = f"JWT {self.token}"
+                yield request
+        else:
+            request.headers["Authorization"] = f"Bearer {self.bearer_token}"
+            response = yield request
+
+            if response.status_code == 401:
+                request.headers["Authorization"] = f"Bearer {self.bearer_token}"
+                yield request
 
 
 class AgiletestHelper:
@@ -90,6 +105,8 @@ class AgiletestHelper:
         base_url: str = AGILETEST_BASE_URL,
         base_auth_url: str = AGILETEST_AUTH_BASE_URL,
         timeout: int = DEFAULT_TIMEOUT,
+        data_center: bool = False,
+        bearer_token: str = AGILETEST_DC_BEARER_TOKEN,
     ):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(LOG_LEVEL)
@@ -99,8 +116,11 @@ class AgiletestHelper:
             client_id=client_id,
             client_secret=client_secret,
             base_auth_url=base_auth_url,
+            data_center=data_center,
+            bearer_token=bearer_token,
         )
         self.client = self._get_client()
+        self.data_center = data_center
 
     def _get_client(self) -> httpx.Client:
         return httpx.Client(
@@ -156,6 +176,12 @@ class AgiletestHelper:
             bool | dict: false if failed, dict with response if success
         """
         framework_type = self._check_auto_test_framework_type(framework_type)
+        apiPath = '';
+        if self.data_center:
+            apiPath = f"/rest/agiletest/1.0/test-executions/automation/{framework_type}"
+        else:
+            apiPath = f"/ds/test-executions/{framework_type}"
+
         params = {"projectKey": project_key}
         if test_execution_key:
             params["testExecutionKey"] = test_execution_key
@@ -163,7 +189,7 @@ class AgiletestHelper:
         _, mime_type = self._get_file_type_from_test_framework(framework_type)
         headers = {"Content-Type": mime_type}
         res = self.client.post(
-            f"/ds/test-executions/{framework_type}",
+            apiPath,
             params=params,
             headers=headers,
             content=test_data,
@@ -228,8 +254,13 @@ class AgiletestHelper:
                 MIME_TYPE_MAPPING["json"],
             ),
         }
+        apiPath = '';
+        if self.data_center:
+            apiPath = f"/plugins/servlet/agiletest/automation/multipart/{framework_type}"
+        else:
+            apiPath = f"/ds/test-executions/{framework_type}/multipart"
         res = self.client.post(
-            f"/ds/test-executions/{framework_type}/multipart",
+            apiPath,
             files=files,
         )
         result = self._check_response(res)
