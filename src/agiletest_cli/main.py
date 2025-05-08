@@ -14,7 +14,7 @@ from config import (
     LOG_FORMAT,
     LOG_LEVEL,
     TRACEBACK_LIMIT,
-    AGILETEST_DC_BEARER_TOKEN,
+    AGILETEST_DC_TOKEN,
 )
 from utils import ClickContextConst
 
@@ -42,8 +42,8 @@ if not is_debug_mode:
     default=AGILETEST_AUTH_BASE_URL,
 )
 @click.option("--timeout", help="Agiletest request timeout", default=DEFAULT_TIMEOUT)
-@click.option("--data-center", help="Agiletest Data center edition", default=False)
-@click.option("--bearer-token", help="Agiletest Data center Bearer Token", default=AGILETEST_DC_BEARER_TOKEN)
+@click.option("--data-center", help="Agiletest Data Center Edition", default=False)
+@click.option("--data-center-token", help="Agiletest Data Center Token", default=AGILETEST_DC_TOKEN)
 @click.pass_context
 def cli(
     ctx: click.Context,
@@ -53,7 +53,7 @@ def cli(
     base_auth_url: str,
     timeout: int,
     data_center: bool,
-    bearer_token: str,
+    data_center_token: str,
 ):
     """AgileTest.app CLI tool. See https://AgileTestApp.github.io/agiletest-cli for documentation."""
     # ensure that ctx.obj exists and is a dict (in case `cli()` is called
@@ -66,7 +66,7 @@ def cli(
         base_auth_url=base_auth_url,
         timeout=timeout,
         data_center=data_center,
-        bearer_token=bearer_token,
+        data_center_token=data_center_token,
     )
     ctx.obj[ClickContextConst.LOGGER] = logging.getLogger(__name__)
 
