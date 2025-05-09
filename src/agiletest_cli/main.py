@@ -42,7 +42,7 @@ if not is_debug_mode:
     default=AGILETEST_AUTH_BASE_URL,
 )
 @click.option("--timeout", help="Agiletest request timeout", default=DEFAULT_TIMEOUT)
-@click.option("--data-center", help="Agiletest Data Center Edition", default=False)
+@click.option("--data-center", help="Agiletest Data Center Edition", default=False, is_flag=True)
 @click.option("--data-center-token", help="Agiletest Data Center Token", default=AGILETEST_DC_TOKEN)
 @click.pass_context
 def cli(

@@ -39,7 +39,7 @@ In Data Center, you need to [generate a personal access token](https://confluenc
 You can pass the personal access token as command line arguments:
 
 ```shell
-agiletest --data-center TRUE --data-center-token your_personal_access_token [COMMANDS]
+agiletest --data-center --data-center-token your_personal_access_token [COMMANDS]
 ```
 
 Or set them as environment variables:
@@ -81,7 +81,7 @@ docker run --rm -i \
 Data Center Edition:
 ```shell
 # with python CLI
-agiletest --data-center TRUE --data-center-token your_personal_access_token \
+agiletest --data-center --data-center-token your_personal_access_token \
     test-execution import \
     --framework-type junit --project-key TC \
     --test-execution-key TC-202 tests/junit-test-data.xml

@@ -77,10 +77,6 @@ class AgiletestAuth(httpx.Auth):
         if self.data_center:
             request.headers["Authorization"] = f"Bearer {self.data_center_token}"
             response = yield request
-
-            if response.status_code == 401:
-                request.headers["Authorization"] = f"Bearer {self.data_center_token}"
-                yield request
         else:
             if not self._check_valid_token():
                 self.logger.debug("Refreshing token")
