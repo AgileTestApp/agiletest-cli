@@ -9,11 +9,11 @@ import jwt
 from config import (
     AGILETEST_AUTH_BASE_URL,
     AGILETEST_BASE_URL,
+    AGILETEST_DC_TOKEN,
     DEFAULT_TIMEOUT,
     FRAMEWORK_RESULT_FILETYPE_MAPPING,
     MIME_TYPE_MAPPING,
     TEST_EXECUTION_TYPES,
-    AGILETEST_DC_TOKEN,
 )
 from httpx import Request, Response
 
@@ -40,7 +40,9 @@ class AgiletestAuth(httpx.Auth):
         self.data_center_token = data_center_token
 
         if not self.data_center and (not self.client_id or not self.client_secret):
-            raise ValueError("Client ID and Client Secret are required for Cloud version")
+            raise ValueError(
+                "Client ID and Client Secret are required for Cloud version"
+            )
         if self.data_center and not self.data_center_token:
             raise ValueError("AGILETEST_DC_TOKEN is required in Data Center mode")
 
@@ -156,6 +158,11 @@ class AgiletestHelper:
         project_key: str,
         test_data: str,
         test_execution_key: str = "",
+        test_plan_keys: list[str] = [],
+        test_environments: list[str] = [],
+        fix_versions: list[str] = [],
+        milestone_id: int = -1,
+        revision: str = "",
     ) -> bool | dict:
         """Upload test execution to Agiletest.
 
@@ -164,6 +171,11 @@ class AgiletestHelper:
             project_key (str): project key
             test_data (str): test execution data
             test_execution_key (str, optional): test execution jira issue key to import to. Defaults to "".
+            test_plan_keys (list[str], optional): The list of test plan key to link with test execution. Defaults to [].
+            test_environments (list[str], optional): The list of test environment name to link with test execution. Defaults to [].
+            fix_versions (list[str], optional): The list of fix version name to link with test execution. Defaults to [].
+            milestone_id (int, optional): Test id of milestone to link with test execution. Defaults to -1.
+            revision (str, optional): Test revision of test execution. Defaults to "".
 
         Raises:
             ValueError: framework type not supported
@@ -181,6 +193,16 @@ class AgiletestHelper:
         params = {"projectKey": project_key}
         if test_execution_key:
             params["testExecutionKey"] = test_execution_key
+        if test_plan_keys:
+            params["testPlanKeys"] = ",".join(test_plan_keys)
+        if test_environments:
+            params["testEnvironments"] = ",".join(test_environments)
+        if fix_versions:
+            params["fixVersions"] = ",".join(fix_versions)
+        if milestone_id >= 0:
+            params["milestoneId"] = milestone_id
+        if revision:
+            params["revision"] = revision
 
         _, mime_type = self._get_file_type_from_test_framework(framework_type)
         headers = {"Content-Type": mime_type}
@@ -250,9 +272,11 @@ class AgiletestHelper:
                 MIME_TYPE_MAPPING["json"],
             ),
         }
-     
+
         if self.data_center:
-            apiPath = f"/plugins/servlet/agiletest/automation/multipart/{framework_type}"
+            apiPath = (
+                f"/plugins/servlet/agiletest/automation/multipart/{framework_type}"
+            )
         else:
             apiPath = f"/ds/test-executions/{framework_type}/multipart"
         res = self.client.post(
