@@ -58,10 +58,11 @@ class AgiletestAuth(httpx.Auth):
 
     def build_refresh_request(self) -> Request:
         self.logger.debug(f"Building refresh request for client id {self.client_id}")
-        return httpx.Request(
+        return httpx.Client().build_request(
             method="POST",
             url=f"{self.base_url}/api/apikeys/authenticate",
             json={"clientId": self.client_id, "clientSecret": self.client_secret},
+            timeout=DEFAULT_TIMEOUT,
         )
 
     def update_token(self, response: Response) -> None:
