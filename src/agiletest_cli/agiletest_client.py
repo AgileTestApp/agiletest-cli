@@ -206,6 +206,7 @@ class AgiletestHelper:
             params["revision"] = revision
 
         _, mime_type = self._get_file_type_from_test_framework(framework_type)
+        self.logger.debug(f"Uploading test execution to {apiPath} with params {params}")
         headers = {"Content-Type": mime_type}
         res = self.client.post(
             apiPath,
