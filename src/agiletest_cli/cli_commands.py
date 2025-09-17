@@ -28,6 +28,44 @@ def test_execution(ctx: click.Context):
     required=False,
     default="",
 )
+@click.option(
+    "-pk",
+    "--test-plan-keys",
+    type=click.STRING,
+    multiple=True,
+    required=False,
+    default=[],
+)
+@click.option(
+    "-envs",
+    "--test-environments",
+    type=click.STRING,
+    multiple=True,
+    required=False,
+    default=[],
+)
+@click.option(
+    "-fv",
+    "--fix-versions",
+    type=click.STRING,
+    multiple=True,
+    required=False,
+    default=[],
+)
+@click.option(
+    "-m",
+    "--milestone-id",
+    type=click.INT,
+    required=False,
+    default=-1,
+)
+@click.option(
+    "-r",
+    "--revision",
+    type=click.STRING,
+    required=False,
+    default="",
+)
 @click.argument("input_file", type=click.File(mode="r"), default=sys.stdin)
 @click.pass_context
 def import_test_execution(
@@ -35,6 +73,11 @@ def import_test_execution(
     framework_type: str,
     project_key: str,
     test_execution_key: str,
+    test_plan_keys: list[str],
+    test_environments: list[str],
+    fix_versions: list[str],
+    milestone_id: int,
+    revision: str,
     input_file: typing.TextIO,
 ):
     """Import a test execution result."""
@@ -51,6 +94,11 @@ def import_test_execution(
         project_key=project_key,
         test_data=input_text,
         test_execution_key=test_execution_key,
+        test_plan_keys=test_plan_keys,
+        test_environments=test_environments,
+        fix_versions=fix_versions,
+        milestone_id=milestone_id,
+        revision=revision,
     )
     if not result:
         logger.error("Failed to import test execution")
