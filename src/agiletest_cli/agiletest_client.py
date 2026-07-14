@@ -73,8 +73,8 @@ class AgiletestAuth(httpx.Auth):
                 f"Failed to refresh token: {response.status_code} - {response.text}"
             )
             raise err
-        self.logger.debug(f"New token: {response.text}")
-        self.token = str(response.text).strip()
+        self.token = response.json().strip().strip('"')
+        self.logger.debug(f"New token: {self.token}")
 
     def auth_flow(self, request: httpx.Request) -> Generator[Request, Response, None]:
         if self.data_center:
